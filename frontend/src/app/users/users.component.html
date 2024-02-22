@@ -1,0 +1,116 @@
+<!-- <section>
+    <div class="example-label">Raised</div>
+    <div class="example-button-row">
+        <button mat-raised-button>Basic</button>
+        <button mat-raised-button color="primary">Primary</button>
+        <button mat-raised-button color="accent">Accent</button>
+        <button mat-raised-button color="warn">Warn</button>
+        <button mat-raised-button disabled>Disabled</button>
+        <a mat-raised-button href="https://www.google.com/" target="_blank">Link</a>
+    </div>
+</section>
+<table mat-table [dataSource]="allUsersDataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="firstName">
+        <th mat-header-cell *matHeaderCellDef> First Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="lastName">
+        <th mat-header-cell *matHeaderCellDef> Last Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="age">
+        <th mat-header-cell *matHeaderCellDef> Age </th>
+        <td mat-cell *matCellDef="let element"> {{element.age}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="gender">
+        <th mat-header-cell *matHeaderCellDef> Gender </th>
+        <td mat-cell *matCellDef="let element"> {{element.gender}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="city">
+        <th mat-header-cell *matHeaderCellDef> City </th>
+        <td mat-cell *matCellDef="let element"> {{element.city}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="userDisplayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: userDisplayedColumns;"></tr>
+</table> 
+
+<h2>TABLE WITH CHECK BOX</h2>-->
+<section>
+    <app-user-create (userCreated)="refreshBrowser()"></app-user-create>
+    <!-- <div class="example-button-row"> -->
+    <div>
+        <button mat-raised-button  (click)="deleteSelected()"
+            [disabled]="!selection.selected.length">Delete Selected</button>
+    </div>
+</section>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 myTable" matSort matSortActive="age" matSortDisableClear [matSortDirection]="sortDirection">
+    <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox [disabled]="!dataSource?.data.length" (change)="$event ? toggleAllRows() : null"
+                [checked]="selection.hasValue() && isAllSelected()"
+                [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+            </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+                [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+            </mat-checkbox>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="firstName">
+        <th mat-header-cell *matHeaderCellDef> First Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="lastName">
+        <th mat-header-cell *matHeaderCellDef> Last Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="age">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Age </th>
+        <td mat-cell *matCellDef="let element"> {{element.age}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="gender">
+        <th mat-header-cell *matHeaderCellDef> Gender </th>
+        <td mat-cell *matCellDef="let element"> {{element.gender}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="city">
+        <th mat-header-cell *matHeaderCellDef> City </th>
+        <td mat-cell *matCellDef="let element"> {{element.city}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="edit">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let element">
+            <div class="example-button-row">
+                <div class="example-flex-container">
+                    <div class="example-button-container">
+                        <button (click)="editButtonClicked(element)" mat-mini-fab color="" aria-label="edit icon">
+                            <mat-icon svgIcon="edit" aria-hidden="false" aria-label="edit icon"></mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="userDisplayedColumnsForChecked"></tr>
+    <div *ngIf="!fetchingData">
+        <tr mat-row *matRowDef="let row; columns: userDisplayedColumnsForChecked;"></tr>
+    </div>
+</table>
+<div class="matSpinner" *ngIf="fetchingData">
+    <mat-spinner></mat-spinner>
+</div>
+<div class="nodata">
+    <h2 *ngIf="!fetchingData && !dataSource?.data.length">No Data to Show</h2>
+</div>

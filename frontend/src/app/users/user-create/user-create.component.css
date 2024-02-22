@@ -1,0 +1,31 @@
+/* :host {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+} */
+
+.example-form-fields {
+    display: flex;
+    align-items: flex-start;
+}
+
+.name-fields {
+    margin-right: 1rem;
+}
+
+.myform {
+    margin: 2rem;
+}
+
+.form-fields {
+    margin-right: 1rem;
+}
+
+section {
+    display: table;
+}
+
+.example-button-row {
+    display: table-cell;
+    max-width: 600px;
+}

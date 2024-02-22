@@ -1,0 +1,37 @@
+<h2 mat-dialog-title>{{!inEditMode? 'Create a User': 'Update User'}}</h2>
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="myForm">
+        <div class="example-form-fields form-fields">
+            <mat-form-field class="form-fields">
+                <mat-label>Title</mat-label>
+                <mat-select formControlName="gender" required>
+                    <mat-option value="Male">Mr.</mat-option>
+                    <mat-option value="Female">Ms.</mat-option>
+                    <mat-option value="Female">Mrs.</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="name-fields">
+                <mat-label>First Name</mat-label>
+                <input matInput formControlName="firstName" required>
+            </mat-form-field>
+            <mat-form-field class="name-fields form-fields">
+                <mat-label>Last Name</mat-label>
+                <input matInput formControlName="lastName" required>
+            </mat-form-field>
+        </div>
+        <mat-form-field class="form-fields">
+            <mat-label>Age</mat-label>
+            <input matInput type="number" formControlName="age" required>
+        </mat-form-field>
+        <mat-form-field class="form-fields">
+            <mat-label>City</mat-label>
+            <input matInput formControlName="city" required>
+        </mat-form-field>
+
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="true" (click)="onSubmit(inEditMode)"
+        [disabled]="myForm.invalid">{{!inEditMode? 'Create': 'Update'}}</button>
+</mat-dialog-actions>
